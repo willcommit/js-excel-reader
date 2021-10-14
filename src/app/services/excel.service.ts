@@ -38,9 +38,9 @@ export class ExcelService {
 
   exportToCsv(dataArray: any, fileName: string) {
 
-    let csv = 'ProductCode,Quantity\n';
+    let csv = 'ProductCode,Quantity,EIT2030(Offer Qty.),Offer Price,Currency,REMARKS\n';
     dataArray.forEach((row: any) => {
-      csv += row.join(',');
+      csv += row.join(',,,,');
       csv += "\n";
     });
 
