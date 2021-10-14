@@ -40,7 +40,8 @@ export class ExcelService {
 
     let csv = 'ProductCode,Quantity,EIT2030(Offer Qty.),Offer Price,Currency,REMARKS\n';
     dataArray.forEach((row: any) => {
-      csv += row.join(',,,,');
+      csv += row.join(',');
+      csv += ",,,,"
       csv += "\n";
     });
 
