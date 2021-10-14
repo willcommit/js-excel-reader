@@ -9,6 +9,8 @@ import { generateDate } from '../utils/date'
 })
 export class UploaderComponent implements OnInit {
 
+  active!: boolean;
+
   fileName: string = '';
 
   constructor(private excelService: ExcelService) {
@@ -19,6 +21,7 @@ export class UploaderComponent implements OnInit {
 
   onFileSelected(event: any) {
 
+    this.active = true;
     const file: File = event.target.files[0];
     const fileReader = new FileReader();
 

@@ -1,11 +1,11 @@
 <input type="file" class="file-input" (change)="onFileSelected($event)" #fileUpload>
 
-<div class="file-upload">
 
-    {{fileName || "No file uploaded yet."}}
- 
-     <button mat-mini-fab color="primary" class="upload-btn"
-       (click)="fileUpload.click()">
-         <div>attach_file</div>
-     </button>
- </div>
+<div [class.drag-area]='true' [class.active]='false' (drop)="onFileSelected($event)">
+  <mat-icon>cloud_upload</mat-icon>
+  <header>Drag & Drop to Upload File</header>
+  <span>OR</span>
+  <button mat-mini-fab color="primary" class="upload-btn"
+  (click)="fileUpload.click()">BROWSE FILE</button>
+  {{fileName || "No file uploaded yet."}}
+</div>
