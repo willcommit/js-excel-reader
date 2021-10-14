@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ExcelService } from '../services/excel.service';
-import { generateDate } from '../utils/date'
+import { FileReaderService } from '../services/file-reader.service';
 
 @Component({
   selector: 'app-uploader',
@@ -9,36 +8,37 @@ import { generateDate } from '../utils/date'
 })
 export class UploaderComponent implements OnInit {
 
-  active!: boolean;
+  isActive!: boolean;
 
   fileName: string = '';
 
-  constructor(private excelService: ExcelService) {
+  constructor(
+    private fileReaderService: FileReaderService) {
   }
 
   ngOnInit(): void {
   }
 
-  onFileSelected(event: any) {
-
-    this.active = true;
-    const file: File = event.target.files[0];
-    const fileReader = new FileReader();
-
-    if (file) {
-      fileReader.readAsBinaryString(file)
-      fileReader.onload = (event: any) => {
-        let binaryData = event.target.result;
-        let jsonArray = this.excelService.readExceltoJson(binaryData);
-        let cleanDataArray = this.excelService.cleanData(jsonArray);
-
-        const dateString = generateDate()
-        const fileName = 'FSA_upload_' + dateString
-
-        this.excelService.exportToCsv(cleanDataArray, fileName)
-      }
-
-    }
+  onDragOver(event: any) {
+    this.isActive = true;
+    event.preventDefault();
   }
 
+  onDragLeave() {
+    this.isActive = false;
+  }
+
+  onDrop(event: any) {
+    event.preventDefault();
+    const file: File = event.dataTransfer.files[0];
+    this.fileReaderService.readFile(file);
+    this.isActive = false;
+  }
+
+  onClick(event: any) {
+    event.preventDefault();
+    const file: File = event.target.files[0]
+    this.fileReaderService.readFile(file);
+    this.isActive = false;
+  } 
 }
